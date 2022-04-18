@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.algaworks.algafood.domain.exception.AtributoObrigatorioException;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
@@ -16,8 +17,16 @@ public class CadastroCozinhaService {
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
 	
+	
 	public Cozinha salvar(Cozinha cozinha) {
+		
+		if(cozinha.getNome() == null) {
+			throw new AtributoObrigatorioException(
+					String.format("O nome da cozinha é obrigatório. ", 1));
+		}
+		
 		return cozinhaRepository.salvar(cozinha);
+		
 	}
 	
 	public void excluir(Long cozinhaId) {

@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.algaworks.algafood.domain.exception.AtributoObrigatorioException;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
@@ -57,17 +57,18 @@ public class CozinhaController {
 		
 	}
 	
-	/**
-	 * POST /cozinhas HTTP/1.1
-	 * 
-	 * {
-	 * 	"nome": "Brasileira"
-	 * }
-	 */
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Cozinha adicionar(@RequestBody Cozinha cozinha){
-		return cadastroCozinha.salvar(cozinha);		
+	public ResponseEntity<?> adicionar(@RequestBody Cozinha cozinha){
+		try {
+			cozinha = cadastroCozinha.salvar(cozinha);
+			
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(cozinha);
+			
+		} catch (AtributoObrigatorioException e) {
+			return ResponseEntity.badRequest()
+					.body(e.getMessage());
+		}
 	}
 	
 	
