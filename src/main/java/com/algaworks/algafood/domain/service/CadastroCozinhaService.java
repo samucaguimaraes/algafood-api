@@ -25,13 +25,13 @@ public class CadastroCozinhaService {
 					String.format("O nome da cozinha é obrigatório. ", 1));
 		}
 		
-		return cozinhaRepository.salvar(cozinha);
+		return cozinhaRepository.save(cozinha);
 		
 	}
 	
 	public void excluir(Long cozinhaId) {
 		try {
-			cozinhaRepository.remover(cozinhaId);
+			cozinhaRepository.deleteById(cozinhaId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));

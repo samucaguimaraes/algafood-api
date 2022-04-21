@@ -22,12 +22,12 @@ public class CadastroEstadoService {
 					String.format("O nome da cozinha é obrigatório. ", 1));
 		}
 		
-		return estadoRepositorio.salvar(estado);
+		return estadoRepositorio.save(estado);
 	}
 
 	public void excluir(Long estadoId) {
 		try {
-			estadoRepositorio.remover(estadoId);
+			estadoRepositorio.deleteById(estadoId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Não existe um cadastro de estado com código %d", estadoId));
