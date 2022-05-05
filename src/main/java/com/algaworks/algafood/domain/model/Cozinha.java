@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
 @JsonRootName("cozinha")
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Cozinha {
